@@ -1,6 +1,6 @@
 import { useMutation } from 'react-query'
 import useStore from '../store'
-import { revalidateList, revalidateSingle } from '../utils/revalitation'
+import { revalidateList, revalidateSingle } from '../utils/revalidation'
 import { supabase } from '../utils/supabase'
 import { Note, EditedNote } from '../types/types'
 

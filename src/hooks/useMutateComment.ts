@@ -1,7 +1,7 @@
 import { useMutation } from 'react-query'
-import useStore from '../store'
-import { revalidateSingle } from '../utils/revalitation'
 import { supabase } from '../utils/supabase'
+import useStore from '../store'
+import { revalidateSingle } from '../utils/revalidation'
 import { Comment, EditedComment } from '../types/types'
 
 export const useMutateComment = () => {
@@ -28,7 +28,7 @@ export const useMutateComment = () => {
     async (comment: EditedComment) => {
       const { data, error } = await supabase
         .from('comments')
-        .update({ comment: comment.content })
+        .update({ content: comment.content })
         .eq('id', comment.id)
       if (error) throw new Error(error.message)
       return data
@@ -54,7 +54,6 @@ export const useMutateComment = () => {
       if (error) throw new Error(error.message)
       return data
     },
-
     {
       onSuccess: (res) => {
         revalidateSingle(res[0].note_id)
@@ -67,5 +66,9 @@ export const useMutateComment = () => {
       },
     }
   )
-  return { deleteCommentMutation, createCommentMutation, updateCommentMutation }
+  return {
+    deleteCommentMutation,
+    createCommentMutation,
+    updateCommentMutation,
+  }
 }
